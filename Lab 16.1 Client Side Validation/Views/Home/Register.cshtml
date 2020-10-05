@@ -1,0 +1,103 @@
+﻿@{ 
+    Layout = null;
+}
+
+<br />
+<h1>@ViewBag.Register</h1>
+<br />
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+            <title>GetUser</title>
+
+        <script>
+            function verifyInfo() {
+                let isValid = true;
+                let email = document.getElementById('emailElement');
+                let password = document.getElementById('passElement');
+                let passVerify = document.getElementById('passVerifyElement');
+                let emailReg = /[a-zA-Z0-9]{2,}@@[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}/;
+                let passReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$&+,:;=?@@#|'<>.-^*()%!])[A-Za-z\d$&+,:;=?@@#|'<>.-^*()%!]{4,}$/;
+
+                if (!emailReg.test(email.value))
+                {
+                    let emailError = document.getElementById('emailError')
+                    emailError.innerHTML = 'Incorrect email';
+                    isValid = false;
+                }
+                else
+                {
+                    emailError.innerHTML = '';
+                }
+                if (!passReg.test(password.value))
+                {
+                    let passError = document.getElementById('passError')
+                    passError.innerHTML = 'Invalid Password';
+                    isValid = false;
+                }
+                else
+                {
+                    passError.innerHTML = '';
+                }
+                if (password.value != passVerify.value)
+                {
+                    let passVerifyError = document.getElementById('passVerifyError')
+                    passVerifyError.innerHTML = 'Passwords not matching';
+                    isValid = false;
+                }
+                else
+                {
+                    passVerifyError.innerHTML = '';
+                }
+                if (!isValid)
+                {
+                    return false;
+                }
+            }
+        </script>
+    </head>
+
+    <form method="post" action="/Home/AddUser" onsubmit="return verifyInfo()">
+        
+        <table>
+            <tr>
+                <td><label for="firstname">First name: </label><br></td>
+                <td><input type="text" name="firstname" minlength="2" placeholder="John" required><br></td>
+            </tr>
+            <tr>
+                <td><label for="lastname">Last name: </label><br></td>
+                <td><input type="text" name="lastname" minlength="2" placeholder="Smith" required><br></td>
+            </tr>
+            <tr>
+                <td><label for="email">Email: </label><br></td>
+                <td><input type="email" name="email" id="emailElement" placeholder="johnsmith@domain.com" required><br></td>
+                <div id="emailError"></div>
+            </tr>
+            <tr>
+                <td><label for="pwd">Password: </label><br></td>
+                <td><input type="password" id="passElement" name="pwd" placeholder="Enter Password" required><br></td>
+                <div id="passError"></div>
+            </tr>
+            <tr>
+                <td><label for="cpwd">Confirm Password: </label><br></td>
+                <td><input type="password" id="passVerifyElement" name="cpwd" placeholder="Confirm Password" required><br></td>
+                <div id="passVerifyError"></div>
+            </tr>
+            <tr>
+                <td><br /><input type="submit" value="Submit"></td>
+            </tr>
+        </table>
+
+        <br />
+        <h6><b>Password must contain the following: </b></h6>
+        <h6>A minimum of 8 characters long</h6>
+        <h6>A lowercase letter</h6>
+        <h6>A capital (uppercase) letter</h6>
+        <h6>A number letter</h6>
+        <h6>A special character</h6>
+
+    </form>
+</html>
